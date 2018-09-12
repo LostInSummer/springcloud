@@ -13,6 +13,9 @@ public class CustomerController {
 	@Autowired
 	private LoadBalancerClient loadBalancerClient;
 
+	@Autowired
+	private RestTemplate restTemplate;
+
 	@GetMapping("/consumer")
 	public String consumer() {
 		ServiceInstance serviceInstance = loadBalancerClient.choose("eureka-producer");
@@ -20,6 +23,11 @@ public class CustomerController {
 				+ "/producer?name=chenjianlong";
 		System.out.println(url);
 		return new RestTemplate().getForObject(url, String.class);
+	}
+
+	@GetMapping("/ribbon")
+	public String ribbon() {
+		return restTemplate.getForObject("http://eureka-producer/producer?name=chenjianlong", String.class);
 	}
 
 }
