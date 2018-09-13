@@ -18,7 +18,8 @@ public class CustomerController {
 
 	@GetMapping("/consumer")
 	public String consumer() {
-		ServiceInstance serviceInstance = loadBalancerClient.choose("eureka-producer");
+		// 获取相应的spring.application.name来自己拼
+		ServiceInstance serviceInstance = loadBalancerClient.choose("eureka-client-producer");
 		String url = "http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort()
 				+ "/producer?name=chenjianlong";
 		System.out.println(url);
@@ -27,7 +28,8 @@ public class CustomerController {
 
 	@GetMapping("/ribbon")
 	public String ribbon() {
-		return restTemplate.getForObject("http://eureka-producer/producer?name=chenjianlong", String.class);
+		// 直接使用spring.application.name来查找对应的ip:port
+		return restTemplate.getForObject("http://eureka-client-producer/producer?name=chenjianlong", String.class);
 	}
 
 }

@@ -18,7 +18,7 @@ public class CustomerController {
 
 	@RequestMapping("/producer")
 	public String product(@RequestParam String name) {
-		return "Service: " + discoveryClient.getServices() + "hi " + name + ", i am from port:" + port;
+		return "Service: " + discoveryClient.getServices() + " hi " + name + ", i am from port:" + port;
 	}
 
 }
